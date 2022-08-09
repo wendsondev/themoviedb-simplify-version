@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Loading } from '../components/Loading';
 import { MovieCard } from '../components/MovieCard';
+import { PaginationController } from '../components/PaginationController';
 import { useFetch } from '../hooks/useFetch';
 
 type Genre = {
@@ -20,8 +22,9 @@ type MovieFetch = {
 }
 
 export function Home() {
+  const [page, setPage] = useState(1);
   const { data } = useFetch<{ genres: Genre[] }>('/genre/movie/list?language=en-US');
-  const { data: movies } = useFetch<MovieFetch>('/movie/popular?language=en-US&page=1');
+  const { data: movies } = useFetch<MovieFetch>(`/movie/popular?language=en-US&page=${page}`);
 
   return (
     <main>
@@ -68,6 +71,13 @@ export function Home() {
                     );
                   })
                 }
+
+                <PaginationController
+                  currentPage={movies.page}
+                  maxItems={5}
+                  totalPages={movies.total_pages > 500 ? 500 : movies.total_pages}
+                  setPage={setPage}
+                />
               </>)
             : (
               <Loading />)
