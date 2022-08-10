@@ -25,7 +25,7 @@ export function PaginationController({ totalPages, currentPage, maxItems, setPag
       </button>
 
       <button
-        className="font-bold p-2 text-purple-700 hover:text-purple-900 disabled:opacity-50"
+        className="font-bold p-2 text-purple-700 disabled:opacity-50 hover:text-purple-900"
         onClick={() => setPage(currentPage - 1)}
         disabled={currentPage <= 1}
       >
@@ -50,14 +50,14 @@ export function PaginationController({ totalPages, currentPage, maxItems, setPag
       </div>
 
       <button
-        className="font-bold p-2 text-purple-700 hover:text-purple-900 disabled:opacity-70"
+        className="font-bold p-2 text-purple-700 disabled:opacity-70 hover:text-purple-900"
         onClick={() => setPage(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
         <RiArrowRightSLine size={24} />
       </button>
       <button
-        className="font-bold p-2 text-purple-700 capitalize hover:text-purple-900 disabled:opacity-70"
+        className="font-bold p-2 text-purple-700 capitalize disabled:opacity-70 hover:text-purple-900"
         onClick={() => setPage(totalPages)}
         disabled={currentPage === totalPages}
       >

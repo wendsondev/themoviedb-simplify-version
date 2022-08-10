@@ -1,14 +1,25 @@
+import { Link } from 'react-router-dom';
+
 type CardProps = {
   imageUrl: string;
   title: string;
   date?: Date;
+  path?: string;
 }
 
-export function MovieCard({ imageUrl, title, date }: CardProps) {
+export function MovieCard({ imageUrl, title, date, path = '#' }: CardProps) {
   return (
-    <div className="max-w-[calc(50%-.5rem)] flex flex-col md:max-w-[calc(33.3%-1rem)] lg:max-w-[11rem]">
+    <Link
+      className="max-w-[calc(50%-.5rem)] flex flex-col hover:opacity-80 md:max-w-[calc(33.3%-1rem)] lg:max-w-[11rem]"
+      to={path}
+      title={title}
+    >
       <img
-        className="object-cover rounded lg:w-[11rem] lg:h-[16.5rem] shadow bg-gray-200"
+        className="object-cover rounded lg:w-[11rem] lg:h-[16.5rem] shadow bg-gray-200 text-transparent lg:max-h-[16.5rem]"
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null; // prevents looping
+          currentTarget.src = '/error-light.svg';
+        }}
         src={imageUrl}
         alt={title}
       />
@@ -26,6 +37,6 @@ export function MovieCard({ imageUrl, title, date }: CardProps) {
             : ''
         }
       </time>
-    </div>
+    </Link>
   );
 }
