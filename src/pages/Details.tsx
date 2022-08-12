@@ -103,8 +103,9 @@ export function Details() {
     return <Loading />;
   }
 
-  const movieNote = decimalAdjust('ceil', data.vote_average, -1) * 100;
+  const movieNote = decimalAdjust('ceil', data.vote_average, -1) * 10;
   const trailer = data.videos.results.find(video => video.official === true && video.type === 'Trailer' && video.iso_639_1 === 'en' && video.site === 'YouTube');
+
   const movieDate = data.release_date
     ? Intl.DateTimeFormat('en-US', {
       day: 'numeric',
@@ -112,7 +113,10 @@ export function Details() {
       year: 'numeric'
     }).format(new Date(data.release_date))
     : '';
+
   const postImage = data.poster_path ? import.meta.env.VITE_API_IMAGE_BASE_URL + data.poster_path : '';
+  const releaseCertification = data.release_dates.results.find(releases => releases.iso_3166_1 === 'US')?.release_dates
+    .find(releases => releases.iso_639_1 === 'en' && releases.certification);
 
   return (
     <>
@@ -135,10 +139,13 @@ export function Details() {
                 {data.title}
               </h1>
               <div className="flex flex-col text-white text-lg">
-                <span>16 anos</span>
+                {
+                  releaseCertification &&
+                  <span>{releaseCertification.certification}</span>
+                }
                 <span>{movieDate}</span>
                 <span>{data.genres.map(genre => genre.name)}</span>
-                <span>{`${Math.floor(data.runtime / 60)}h ${Math.ceil(data.runtime % 60)}`}</span>
+                <span>{`${Math.floor(data.runtime / 60)}h ${Math.ceil(data.runtime % 60)}m`}</span>
               </div>
             </div>
 
@@ -150,7 +157,7 @@ export function Details() {
                   cy="27" r="24"
                   fill="none"
                   strokeDasharray="148"
-                  strokeDashoffset={148 - (148 * movieNote / 100)}
+                  strokeDashoffset={148 - (148 * (movieNote) / 100)}
                   strokeLinecap="round"
                 />
                 <text
@@ -161,11 +168,11 @@ export function Details() {
                   x="27"
                   y="28"
                 >
-                  {movieNote / 100}%
+                  {movieNote}%
                 </text>
               </svg>
               <span className="w-28 text-white">
-                Avaliação dos usuários
+                User Score
               </span>
             </div>
 
@@ -174,13 +181,12 @@ export function Details() {
             </strong>
 
             <p className="text-gray-200">
-              {data.overview}
+              {data.overview || 'We don\'t have an overview translated in English.'}
             </p>
 
             <div className="flex flex-wrap gap-4 mt-8">
               {
                 data.credits.crew && data.credits.crew.length > 7
-
                   ? data.credits.crew.slice(0, 6).map(person => {
                     return (
                       <div key={`${person.id}-job`} className="flex flex-col text-white">
@@ -189,25 +195,31 @@ export function Details() {
                       </div>
                     );
                   })
+                  : data.credits.crew && data.credits.crew.length > 0
 
-                  : data.credits.crew.map(person => {
-                    return (
-                      <div key={`${person.id}-job`} className="flex flex-col text-white">
-                        <span className="font-bold">{person.name}</span>
-                        <span className="text-sm">{person.job}</span>
-                      </div>
-                    );
-                  })
+                    ? data.credits.crew.map(person => {
+                      return (
+                        <div key={`${person.id}-job`} className="flex flex-col text-white">
+                          <span className="font-bold">{person.name}</span>
+                          <span className="text-sm">{person.job}</span>
+                        </div>
+                      );
+                    })
+
+                    : (
+                      <span className="text-gray-200">
+                        {'We don\'t have a crew list for this film.'}
+                      </span>)
               }
             </div>
           </div>
         </section>
 
-        <div className="flex flex-col gap-6 md:w-[90%] md:mx-auto lg:w-[80%]">
+        <div className="flex flex-col gap-6 md:w-[90%] md:mx-auto lg:w-[80%] md:min-h-[50vh]">
           <section className="flex flex-col gap-3 md:mt-12">
             <h2 className="text-3xl font-bold text-gray-800 ml-4">Original cast</h2>
 
-            <div className="w-full grid grid-flow-col overflow-x-auto gap-4 px-4 pb-4">
+            <div className="w-full grid grid-flow-col overflow-x-auto gap-4 px-4 pb-4 justify-start">
               {
                 data.credits.cast && data.credits.cast.length > 13
                   ? data.credits.cast.slice(0, 12).map(person => {
@@ -222,17 +234,22 @@ export function Details() {
                     );
                   })
 
-                  : data.credits.cast.map(person => {
-                    const imageUrl = person.profile_path ? import.meta.env.VITE_API_IMAGE_BASE_URL + person.profile_path : '';
-                    return (
-                      <Card
-                        key={person.id}
-                        imageUrl={imageUrl}
-                        title={person.name}
-                        description={person.character}
-                      />
-                    );
-                  })
+                  : data.credits.cast && data.credits.cast.length > 0
+                    ? data.credits.cast.map(person => {
+                      const imageUrl = person.profile_path ? import.meta.env.VITE_API_IMAGE_BASE_URL + person.profile_path : '';
+                      return (
+                        <Card
+                          key={person.id}
+                          imageUrl={imageUrl}
+                          title={person.name}
+                          description={person.character}
+                        />
+                      );
+                    })
+
+                    : <span className="text-gray-800 text-lg">
+                      {'We don\'t have a cast list for this movie.'}
+                    </span>
               }
             </div>
           </section>
@@ -273,19 +290,25 @@ export function Details() {
                     );
                   })
 
-                  : data.recommendations.results.map(movie => {
-                    const date = movie.release_date ? new Date(movie.release_date) : undefined;
-                    const imageUrl = movie.poster_path ? import.meta.env.VITE_API_IMAGE_BASE_URL + movie.poster_path : '';
-                    return (
-                      <MovieCard
-                        key={movie.id}
-                        imageUrl={imageUrl}
-                        title={movie.title}
-                        date={date}
-                        path={`../movie/${movie.id}`}
-                      />
-                    );
-                  })
+                  : data.recommendations.results && data.recommendations.results.length > 0
+
+                    ? data.recommendations.results.map(movie => {
+                      const date = movie.release_date ? new Date(movie.release_date) : undefined;
+                      const imageUrl = movie.poster_path ? import.meta.env.VITE_API_IMAGE_BASE_URL + movie.poster_path : '';
+                      return (
+                        <MovieCard
+                          key={movie.id}
+                          imageUrl={imageUrl}
+                          title={movie.title}
+                          date={date}
+                          path={`../movie/${movie.id}`}
+                        />
+                      );
+                    })
+
+                    : <span className="text-lg text-gray-800">
+                      {'We don\'t have a recommendation list for this movie.'}
+                    </span>
               }
             </div>
           </section>
