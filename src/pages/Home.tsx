@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Loading } from '../components/Loading';
 import { MovieCard } from '../components/MovieCard';
@@ -24,7 +25,8 @@ type MovieFetch = {
 }
 
 export function Home() {
-  const [page, setPage] = useState(1);
+  const { page } = useParams();
+  const navigate = useNavigate();
   const { data } = useFetch<{ genres: Genre[] }>('/genre/movie/list?language=en-US');
   const [genresFiltered, setGenresFiltered] = useState<number[]>([]);
   const { data: movies } = useFetch<MovieFetch>(`/movie/popular?language=en-US&page=${page}`);
@@ -41,6 +43,10 @@ export function Home() {
     setGenresFiltered(newList);
 
     localStorage.setItem('themoviedb@genres-filtered', JSON.stringify(newList));
+  };
+
+  const handleChangePage = (page: number) => {
+    navigate(`../${page}`);
   };
 
   useEffect(() => {
@@ -107,7 +113,7 @@ export function Home() {
                             imageUrl={imageUrl}
                             title={movie.title}
                             date={date}
-                            path={`movie/${movie.id}`}
+                            path={`../movie/${movie.id}`}
                           />
                         );
                       })
@@ -120,7 +126,7 @@ export function Home() {
                     currentPage={movies.page}
                     maxItems={5}
                     totalPages={movies.total_pages > 500 ? 500 : movies.total_pages}
-                    setPage={setPage}
+                    setPage={handleChangePage}
                   />
                 }
               </>
