@@ -5,17 +5,18 @@ type CardProps = {
   title: string;
   date?: Date;
   path?: string;
+  responsive?: boolean;
 }
 
-export function MovieCard({ imageUrl, title, date, path = '#' }: CardProps) {
+export function MovieCard({ imageUrl, title, date, path = '#', responsive = true }: CardProps) {
   return (
     <Link
-      className="max-w-[calc(50%-.5rem)] flex flex-col hover:opacity-80 md:max-w-[calc(33.3%-1rem)] lg:max-w-[11rem]"
+      className={`flex flex-col hover:opacity-80 lg:max-w-[11rem] ${responsive ? 'max-w-[calc(50%-.5rem)] md:max-w-[calc(33.3%-1rem)]' : 'w-[11rem]'}`}
       to={path}
       title={title}
     >
       <img
-        className="object-cover rounded lg:w-[11rem] lg:h-[16.5rem] shadow bg-gray-200 text-transparent lg:max-h-[16.5rem]"
+        className="object-cover rounded shadow bg-gray-200 text-transparent lg:w-[11rem] lg:h-[16.5rem] lg:max-h-[16.5rem]"
         onError={({ currentTarget }) => {
           currentTarget.onerror = null; // prevents looping
           currentTarget.src = '/error-light.svg';

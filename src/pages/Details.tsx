@@ -230,6 +230,7 @@ export function Details() {
                         imageUrl={imageUrl}
                         title={person.name}
                         description={person.character}
+                        path={`../person/${person.id}`}
                       />
                     );
                   })
@@ -243,6 +244,7 @@ export function Details() {
                           imageUrl={imageUrl}
                           title={person.name}
                           description={person.character}
+                          path={`../person/${person.id}`}
                         />
                       );
                     })
