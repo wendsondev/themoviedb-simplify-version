@@ -14,7 +14,7 @@
 - [Axios](https://github.com/axios/axios)
 - [Swr](https://swr.vercel.app/)
 
-## Como executar
+## 🧑‍💻 Como executar
 
 Clone o projeto e acesse sua pasta
 
@@ -43,6 +43,11 @@ acesse o projeto em [localhost:3000](http://localhost:3000) em seu navegador.
 layout usado no projeto no link abaixo
 
 - [layout web](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End)
+
+## ©️ Creditos
+
+API utilizada
+- [themoviedb](https://developers.themoviedb.org/3)
 
 ## 📝 License
 
