@@ -36,6 +36,7 @@ $ yarn dev
   ou
 $ npm run dev
 ```
+
 acesse o projeto em [localhost:3000](http://localhost:3000) em seu navegador.
 
 ## 📌 Layout
@@ -47,6 +48,7 @@ layout usado no projeto no link abaixo
 ## ©️ Creditos
 
 API utilizada
+
 - [themoviedb](https://developers.themoviedb.org/3)
 
 ## 📝 License

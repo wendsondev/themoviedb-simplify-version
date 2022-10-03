@@ -6,12 +6,22 @@ type CardProps = {
   date?: Date;
   path?: string;
   responsive?: boolean;
-}
+};
 
-export function MovieCard({ imageUrl, title, date, path = '#', responsive = true }: CardProps) {
+export function MovieCard({
+  imageUrl,
+  title,
+  date,
+  path = '#',
+  responsive = true,
+}: CardProps) {
   return (
     <Link
-      className={`flex flex-col hover:opacity-80 lg:max-w-[11rem] ${responsive ? 'max-w-[calc(50%-.5rem)] md:max-w-[calc(33.3%-1rem)]' : 'w-[11rem]'}`}
+      className={`flex flex-col hover:opacity-80 lg:max-w-[11rem] ${
+        responsive
+          ? 'max-w-[calc(50%-.5rem)] md:max-w-[calc(33.3%-1rem)]'
+          : 'w-[11rem]'
+      }`}
       to={path}
       title={title}
     >
@@ -24,19 +34,15 @@ export function MovieCard({ imageUrl, title, date, path = '#', responsive = true
         src={imageUrl}
         alt={title}
       />
-      <strong className="text-sm mt-2.5 capitalize text-black">
-        {title}
-      </strong>
+      <strong className="text-sm mt-2.5 capitalize text-black">{title}</strong>
       <time className="text-xs leading-[1.125rem] text-gray-600 uppercase font-bold">
-        {
-          date
-            ? Intl.DateTimeFormat('en-US', {
+        {date
+          ? Intl.DateTimeFormat('en-US', {
               month: 'short',
               day: 'numeric',
-              year: 'numeric'
+              year: 'numeric',
             }).format(date)
-            : ''
-        }
+          : ''}
       </time>
     </Link>
   );

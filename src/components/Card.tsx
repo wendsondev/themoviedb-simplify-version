@@ -5,7 +5,7 @@ type CardProps = {
   title: string;
   description: string;
   path?: string;
-}
+};
 
 export function Card({ imageUrl, title, description, path = '#' }: CardProps) {
   return (

@@ -8,10 +8,10 @@ type Cast = {
   id: number;
   title: string;
   poster_path: string;
-}
+};
 
 type PersonData = {
-  id: number,
+  id: number;
   name: string;
   profile_path: string;
   place_of_birth: string;
@@ -22,16 +22,19 @@ type PersonData = {
   gender: number;
   movie_credits: {
     cast: Cast[];
-  }
-}
+  };
+};
 
 export function Person() {
   const { id } = useParams();
-  const { data } = useFetch<PersonData>(`https://api.themoviedb.org/3/person/${id}`, {
-    params: {
-      append_to_response: 'movie_credits'
+  const { data } = useFetch<PersonData>(
+    `https://api.themoviedb.org/3/person/${id}`,
+    {
+      params: {
+        append_to_response: 'movie_credits',
+      },
     }
-  });
+  );
 
   const birthday = data && data.birthday?.length > 0 && new Date(data.birthday);
 
@@ -42,9 +45,7 @@ export function Person() {
   };
 
   if (!data) {
-    return (
-      <Loading />
-    );
+    return <Loading />;
   }
 
   return (
@@ -54,7 +55,9 @@ export function Person() {
         <section className="flex flex-col gap-4">
           <img
             className="max-w-[23rem] w-4/5 min-h-72 rounded-lg drop-shadow-md object-cover bg-purple-700 mx-auto md:w-full"
-            src={import.meta.env.VITE_API_IMAGE_BASE_URL + data.profile_path || ''}
+            src={
+              import.meta.env.VITE_API_IMAGE_BASE_URL + data.profile_path || ''
+            }
             onError={({ currentTarget }) => {
               currentTarget.onerror = null; // prevents looping
               currentTarget.src = '/error.svg';
@@ -81,20 +84,17 @@ export function Person() {
 
           <p className="grid">
             <strong>Birthday</strong>
-            {
-              birthday &&
+            {birthday && (
               <span className="flex gap-1">
-                {
-                  Intl.DateTimeFormat('en-US', {
-                    year: 'numeric',
-                    month: 'numeric',
-                    day: 'numeric'
-                  }).format(birthday)
-                }
+                {Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'numeric',
+                  day: 'numeric',
+                }).format(birthday)}
 
-                <span>({calculateAge(birthday)}  years old)</span>
+                <span>({calculateAge(birthday)} years old)</span>
               </span>
-            }
+            )}
           </p>
 
           <p className="grid">
@@ -105,13 +105,9 @@ export function Person() {
           <div className="grid">
             <strong>Also Known As</strong>
             <div className="flex flex-col gap-2">
-              {
-                data.also_known_as.map((item, index) => {
-                  return (
-                    <span key={index}>{item}</span>
-                  );
-                })
-              }
+              {data.also_known_as.map((item, index) => {
+                return <span key={index}>{item}</span>;
+              })}
             </div>
           </div>
         </section>
@@ -120,43 +116,51 @@ export function Person() {
           <h1 className="text-2xl font-bold mb-8">{data.name}</h1>
 
           <h2 className="text-xl font-bold">Biography</h2>
-          <p>{data.biography || 'We don\'t have an overview translated in English.'}</p>
+          <p>
+            {data.biography ||
+              "We don't have an overview translated in English."}
+          </p>
 
-          <strong className="text-lg font-bold mt-4 mb-4 md:mt-8">Known For</strong>
+          <strong className="text-lg font-bold mt-4 mb-4 md:mt-8">
+            Known For
+          </strong>
           <div className="w-full grid grid-flow-col overflow-x-auto gap-4 px-4 pb-4 justify-start text-center">
-            {
-              data.movie_credits.cast && data.movie_credits.cast.length > 13
-                ? data.movie_credits.cast.slice(0, 12).map(movie => {
-                  const imageUrl = movie.poster_path ? import.meta.env.VITE_API_IMAGE_BASE_URL + movie.poster_path : '';
-                  return (
-                    <MovieCard
-                      key={movie.id}
-                      imageUrl={imageUrl}
-                      title={movie.title}
-                      path={`../movie/${movie.id}`}
-                      responsive={false}
-                    />
-                  );
-                })
-
-                : data.movie_credits.cast && data.movie_credits.cast.length > 0
-                  ? data.movie_credits.cast.map(movie => {
-                    const imageUrl = movie.poster_path ? import.meta.env.VITE_API_IMAGE_BASE_URL + movie.poster_path : '';
-                    return (
-                      <MovieCard
-                        key={movie.id}
-                        imageUrl={imageUrl}
-                        title={movie.title}
-                        path={`../movie/${movie.id}`}
-                        responsive={false}
-                      />
-                    );
-                  })
-
-                  : <span className="text-gray-800 text-lg">
-                    {'We don\'t have a cast list for this movie.'}
-                  </span>
-            }
+            {data.movie_credits.cast && data.movie_credits.cast.length > 13 ? (
+              data.movie_credits.cast.slice(0, 12).map((movie) => {
+                const imageUrl = movie.poster_path
+                  ? import.meta.env.VITE_API_IMAGE_BASE_URL + movie.poster_path
+                  : '';
+                return (
+                  <MovieCard
+                    key={movie.id}
+                    imageUrl={imageUrl}
+                    title={movie.title}
+                    path={`../movie/${movie.id}`}
+                    responsive={false}
+                  />
+                );
+              })
+            ) : data.movie_credits.cast &&
+              data.movie_credits.cast.length > 0 ? (
+              data.movie_credits.cast.map((movie) => {
+                const imageUrl = movie.poster_path
+                  ? import.meta.env.VITE_API_IMAGE_BASE_URL + movie.poster_path
+                  : '';
+                return (
+                  <MovieCard
+                    key={movie.id}
+                    imageUrl={imageUrl}
+                    title={movie.title}
+                    path={`../movie/${movie.id}`}
+                    responsive={false}
+                  />
+                );
+              })
+            ) : (
+              <span className="text-gray-800 text-lg">
+                {"We don't have a cast list for this movie."}
+              </span>
+            )}
           </div>
         </section>
       </main>
