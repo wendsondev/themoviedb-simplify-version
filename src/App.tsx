@@ -1,7 +1,7 @@
+import { Details } from '@Pages/Details';
+import { Home } from '@Pages/Home';
+import { Person } from '@Pages/Person';
 import { Route, Routes } from 'react-router-dom';
-import { Details } from './pages/Details';
-import { Home } from './pages/Home';
-import { Person } from './pages/Person';
 
 export function App() {
   return (

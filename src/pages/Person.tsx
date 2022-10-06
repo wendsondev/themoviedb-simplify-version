@@ -1,8 +1,8 @@
+import { Header } from '@Components/Header';
+import { Loading } from '@Components/Loading';
+import { MovieCard } from '@Components/MovieCard';
+import { useFetch } from '@Hooks/useFetch';
 import { useParams } from 'react-router-dom';
-import { Header } from '../components/Header';
-import { Loading } from '../components/Loading';
-import { MovieCard } from '../components/MovieCard';
-import { useFetch } from '../hooks/useFetch';
 
 type Cast = {
   id: number;

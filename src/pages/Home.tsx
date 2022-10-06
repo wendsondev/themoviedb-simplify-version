@@ -1,11 +1,11 @@
+import { Header } from '@Components/Header';
+import { Loading } from '@Components/Loading';
+import { MovieCard } from '@Components/MovieCard';
+import { PaginationController } from '@Components/PaginationController';
+import { useFetch } from '@Hooks/useFetch';
 import { useEffect, useState } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Header } from '../components/Header';
-import { Loading } from '../components/Loading';
-import { MovieCard } from '../components/MovieCard';
-import { PaginationController } from '../components/PaginationController';
-import { useFetch } from '../hooks/useFetch';
 
 type Genre = {
   id: number;
