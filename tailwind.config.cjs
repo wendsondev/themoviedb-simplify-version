@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{tsx,html,css}'],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -23,6 +24,7 @@ module.exports = {
           600: '#646464',
           800: '#323232',
         },
+        bgDark: '#080013',
       },
     },
   },

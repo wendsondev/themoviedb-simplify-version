@@ -71,7 +71,7 @@ export function Home() {
   return (
     <>
       <Header />
-      <main>
+      <main className="overflow-x-hidden">
         <section className="bg-purple-900">
           <div className="max-w-5xl flex flex-col px-4 py-10 text-white mx-auto md:items-center">
             <h1 className="text-2xl leading-[1.75rem] font-bold md:text-5xl md:text-center">

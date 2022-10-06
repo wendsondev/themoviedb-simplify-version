@@ -65,24 +65,32 @@ export function Person() {
             alt={data.name}
           />
 
-          <h2 className="text-xl font-bold">Personal Info</h2>
+          <h2 className="text-xl font-bold dark:text-gray-200">
+            Personal Info
+          </h2>
 
-          <p className="grid">
+          <p className="grid dark:text-gray-200">
             <strong>Known For</strong>
-            <span>{data.known_for_department}</span>
+            <span className="dark:text-gray-400">
+              {data.known_for_department}
+            </span>
           </p>
 
-          <p className="grid">
+          <p className="grid dark:text-gray-200">
             <strong>Known Credits</strong>
-            <span>{data.movie_credits.cast.length}</span>
+            <span className="dark:text-gray-400">
+              {data.movie_credits.cast.length}
+            </span>
           </p>
 
-          <p className="grid">
+          <p className="grid dark:text-gray-200">
             <strong>Gender</strong>
-            <span>{data.gender > 1 ? 'Male' : 'Female'}</span>
+            <span className="dark:text-gray-400">
+              {data.gender > 1 ? 'Male' : 'Female'}
+            </span>
           </p>
 
-          <p className="grid">
+          <p className="grid dark:text-gray-200">
             <strong>Birthday</strong>
             {birthday && (
               <span className="flex gap-1">
@@ -97,14 +105,14 @@ export function Person() {
             )}
           </p>
 
-          <p className="grid">
+          <p className="grid dark:text-gray-200">
             <strong>Place of Birth</strong>
-            <span>{data.place_of_birth}</span>
+            <span className="dark:text-gray-400">{data.place_of_birth}</span>
           </p>
 
-          <div className="grid">
+          <div className="grid dark:text-gray-200">
             <strong>Also Known As</strong>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 dark:text-gray-400">
               {data.also_known_as.map((item, index) => {
                 return <span key={index}>{item}</span>;
               })}
@@ -113,15 +121,17 @@ export function Person() {
         </section>
 
         <section className="flex flex-col gap-1">
-          <h1 className="text-2xl font-bold mb-8">{data.name}</h1>
+          <h1 className="text-2xl font-bold mb-8 dark:text-gray-200">
+            {data.name}
+          </h1>
 
-          <h2 className="text-xl font-bold">Biography</h2>
-          <p>
+          <h2 className="text-xl font-bold dark:text-gray-200">Biography</h2>
+          <p className="dark:text-gray-400">
             {data.biography ||
               "We don't have an overview translated in English."}
           </p>
 
-          <strong className="text-lg font-bold mt-4 mb-4 md:mt-8">
+          <strong className="text-lg font-bold mt-4 mb-4 md:mt-8 dark:text-gray-200">
             Known For
           </strong>
           <div className="w-full grid grid-flow-col overflow-x-auto gap-4 px-4 pb-4 justify-start text-center">

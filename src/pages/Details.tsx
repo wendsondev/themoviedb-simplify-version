@@ -243,7 +243,7 @@ export function Details() {
 
         <div className="flex flex-col gap-6 md:w-[90%] md:mx-auto lg:w-[80%] md:min-h-[50vh]">
           <section className="flex flex-col gap-3 md:mt-12">
-            <h2 className="text-3xl font-bold text-gray-800 ml-4">
+            <h2 className="text-3xl font-bold text-gray-800 ml-4 dark:text-gray-200">
               Original cast
             </h2>
 
@@ -281,7 +281,7 @@ export function Details() {
                   );
                 })
               ) : (
-                <span className="text-gray-800 text-lg">
+                <span className="text-gray-800 text-lg dark:text-gray-200">
                   {"We don't have a cast list for this movie."}
                 </span>
               )}
@@ -290,7 +290,7 @@ export function Details() {
 
           {trailer && (
             <section className="flex flex-col gap-3 px-4 md:w-[80%] lg:w-[70%]">
-              <h2 className="text-2xl leading-8 font-bold text-gray-800">
+              <h2 className="text-2xl leading-8 font-bold text-gray-800 dark:text-gray-200">
                 Trailer
               </h2>
 
@@ -300,14 +300,13 @@ export function Details() {
                   id="ytplayer"
                   itemType="text/html"
                   src={`https://www.youtube.com/embed/${trailer.key}`}
-                  frameBorder="0"
                 />
               </div>
             </section>
           )}
 
           <section className="flex flex-col gap-4 px-4">
-            <h2 className="text-3xl font-bold text-gray-800">
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
               Recommendations
             </h2>
 
@@ -353,7 +352,7 @@ export function Details() {
                   );
                 })
               ) : (
-                <span className="text-lg text-gray-800">
+                <span className="text-lg text-gray-800 dark:text-gray-200">
                   {"We don't have a recommendation list for this movie."}
                 </span>
               )}
