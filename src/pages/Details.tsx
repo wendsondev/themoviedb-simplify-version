@@ -109,7 +109,11 @@ export function Details() {
   };
 
   if (!data) {
-    return <Loading />;
+    return (
+      <main className="overflow-hidden">
+        <Loading />
+      </main>
+    );
   }
 
   const movieNote = decimalAdjust('ceil', data.vote_average, -1) * 10;

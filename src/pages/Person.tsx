@@ -45,7 +45,11 @@ export function Person() {
   };
 
   if (!data) {
-    return <Loading />;
+    return (
+      <main className="overflow-hidden">
+        <Loading />
+      </main>
+    );
   }
 
   return (

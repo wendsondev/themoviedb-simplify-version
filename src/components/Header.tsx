@@ -12,7 +12,7 @@ export function Header() {
       </Link>
 
       <button className="text-gray-200" onClick={toggleTheme}>
-        {theme === 'light' ? (
+        {theme === 'dark' ? (
           <MdDarkMode size={38} className="animate-[spin_.5s_ease-in-out]" />
         ) : (
           <MdLightMode size={38} className="animate-[spin_.5s_ease-in-out]" />
