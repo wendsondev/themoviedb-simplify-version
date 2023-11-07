@@ -32,7 +32,7 @@ export function Home() {
   );
   const [genresFiltered, setGenresFiltered] = useState<number[]>([]);
   const { data: movies } = useFetch<MovieFetch>(
-    `/movie/popular?language=en-US&page=${page}`
+    `/movie/popular?language=en-US&page=${page || 1}`
   );
 
   const filteredMovies =
